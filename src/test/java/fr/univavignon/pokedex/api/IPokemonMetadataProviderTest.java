@@ -2,33 +2,45 @@ package fr.univavignon.pokedex.api;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-class PokemonMetadataProviderTest {
+class IPokemonMetadataProviderTest {
 
-    private IPokemonMetadataProvider provider;
+    private IPokemonMetadataProvider metadataProvider;
 
     @BeforeEach
     void setUp() throws PokedexException {
-        provider = Mockito.mock(IPokemonMetadataProvider.class);
+        metadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
 
-        when(provider.getPokemonMetadata(0)).thenReturn(new PokemonMetadata(0, "Pick", 250, 120, 90));
-        when(provider.getPokemonMetadata(1)).thenReturn(new PokemonMetadata(1, "Chu", 150, 100, 80));
-        when(provider.getPokemonMetadata(2)).thenReturn(new PokemonMetadata(2, "Char", 200, 110, 70));
+        when(metadataProvider.getPokemonMetadata(0)).thenReturn(new PokemonMetadata(0, "Bulbizarre", 126, 126, 90));
+        when(metadataProvider.getPokemonMetadata(133)).thenReturn(new PokemonMetadata(133, "Aquali", 186, 168, 260));
     }
 
     @Test
-    void testGetMetadataForValidIndex() throws PokedexException {
-        PokemonMetadata metadata = provider.getPokemonMetadata(1);
-        assertEquals(1, metadata.getIndex());
-        assertEquals("Chu", metadata.getName());
-        assertEquals(150, metadata.getAttack());
-        assertEquals(100, metadata.getDefense());
-        assertEquals(80, metadata.getStamina());
+    void testGetBulbizarreMetadata() throws PokedexException {
+        PokemonMetadata metadata = metadataProvider.getPokemonMetadata(0);
+        assertEquals(0, metadata.getIndex());
+        assertEquals("Bulbizarre", metadata.getName());
+        assertEquals(126, metadata.getAttack());
+        assertEquals(126, metadata.getDefense());
+        assertEquals(90, metadata.getStamina());
+        verify(metadataProvider).getPokemonMetadata(0);
+    }
+
+    @Test
+    void testGetAqualiMetadata() throws PokedexException {
+        PokemonMetadata metadata = metadataProvider.getPokemonMetadata(133);
+        assertEquals(133, metadata.getIndex());
+        assertEquals("Aquali", metadata.getName());
+        assertEquals(186, metadata.getAttack());
+        assertEquals(168, metadata.getDefense());
+        assertEquals(260, metadata.getStamina());
+        verify(metadataProvider).getPokemonMetadata(133);
     }
 
 }
