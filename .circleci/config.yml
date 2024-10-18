@@ -19,7 +19,7 @@ jobs:
           command: mvn verify
       - codecov/upload:
           file: target/site/jacoco/jacoco.xml
-          token: a9a9050e-dbd4-4f67-98d5-14064fe8b327
+          token: CODECOV_TOKEN
       - store_test_results:
           path: target/surefire-reports
       - save_cache:
