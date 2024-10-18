@@ -15,17 +15,35 @@ jobs:
       - restore_cache:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
       - run:
-          name: Run tests and generate coverage report
-          command: mvn verify
-      - codecov/upload:
-          file: target/site/jacoco/jacoco.xml
+          name: Run tests and upload coverage to Codecov
+          command: |
+            mvn verify
+            # Install Codecov CLI tool (replace with your token)
+            bash <(curl -s https://codecov.io/bash) -t maven -x YOUR_CODECOV_TOKEN
+            # Upload coverage report from target/surefire-reports
+            codecov -f target/surefire-reports
       - store_test_results:
           path: target/surefire-reports
       - save_cache:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.m2/repository
+  deploy:  # Assuming you still want a deploy job
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run:
+          name: deploy
+          command: '#e.g. ./deploy.sh'
 workflows:
+  upload-to-codecov:
+    jobs:
+      - checkout
+      - codecov/upload
   build-and-test:
     jobs:
       - test-java
+  # If you don't want the deploy job to run after test-java, remove it
+  # - deploy:
+  #     requires:
+  #       - test-java
