@@ -2,6 +2,7 @@ package fr.univavignon.pokedex.api;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,6 +42,15 @@ class IPokemonMetadataProviderTest {
         assertEquals(168, metadata.getDefense());
         assertEquals(260, metadata.getStamina());
         verify(metadataProvider).getPokemonMetadata(133);
+    }
+
+    @Test
+    void testGetMetadataInvalidIndexExecption() throws PokedexException {
+        when(metadataProvider.getPokemonMetadata(-1)).thenThrow(new PokedexException("Index invalid"));
+
+        assertThrows(PokedexException.class,() ->{
+            metadataProvider.getPokemonMetadata(-1);
+        });
     }
 
 }

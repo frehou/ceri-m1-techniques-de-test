@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -65,6 +66,14 @@ public class IPokedexTest {
 
         verify(pokedex).getPokemon(0);
         verify(pokedex).getPokemon(1);
+    }
+
+    @Test
+    void testGetPokedexInvalidIndexExecption() throws PokedexException {
+        when(pokedex.getPokemon(-1)).thenThrow(new PokedexException("Index invalid"));
+        assertThrows(PokedexException.class,() ->{
+            pokedex.getPokemon(-1);
+        });
     }
 
     @Test
