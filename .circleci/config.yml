@@ -24,7 +24,9 @@ jobs:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.m2/repository
-      - codecov/upload
+      - codecov/upload:
+          file: target/site/jacoco/jacoco.xml
+
   deploy:
     docker:
       - image: cimg/base:stable
