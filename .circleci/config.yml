@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  codecov: codecov/codecov@4.0.1
+
 jobs:
   test-java:
     docker:
@@ -20,6 +24,7 @@ jobs:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.m2/repository
+      - codecov/upload
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
