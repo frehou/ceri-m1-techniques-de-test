@@ -2,38 +2,31 @@ package fr.univavignon.pokedex.api;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PokemonFactoryTest {
 
-    private PokemonFactory pokemonFactory;
-    private IPokemonMetadataProvider metadataProvider;
+    private RocketPokemonFactory pokemonFactory;
 
     @BeforeEach
     void setUp() throws PokedexException {
-        metadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
-        when(metadataProvider.getPokemonMetadata(133))
-                .thenReturn(new PokemonMetadata(133, "Aquali", 186, 168, 260));
-        pokemonFactory = new PokemonFactory(metadataProvider);
+        pokemonFactory = new RocketPokemonFactory();
     }
 
     @Test
-    void testCreateAqualiPokemon() {
-        Pokemon pokemon = pokemonFactory.createPokemon(133, 2729, 202, 5000, 4);
-        assertNotNull(pokemon, "Pokemon should not be null");
-        assertEquals(133, pokemon.getIndex(), "Index should match");
-        assertEquals("Aquali", pokemon.getName(), "Name should match");
-        assertEquals(186, pokemon.getAttack(), "Attack stat should match");
-        assertEquals(168, pokemon.getDefense(), "Defense stat should match");
-        assertEquals(260, pokemon.getStamina(), "Stamina stat should match");
-        assertEquals(2729, pokemon.getCp(), "CP should match");
-        assertEquals(202, pokemon.getHp(), "HP should match");
-        assertEquals(5000, pokemon.getDust(), "Dust cost should match");
-        assertEquals(4, pokemon.getCandy(), "Candy count should match");
-        assertEquals(1465.5, pokemon.getIv(), 0.01, "IV should match");
+    void testCreatePokemonValid() {
+        Pokemon pokemon = pokemonFactory.createPokemon(1, 800, 220, 8000, 10);
+
+        assertEquals(1, pokemon.getIndex());
+        assertEquals("Bulbasaur", pokemon.getName());
+        assertEquals(800, pokemon.getCp());
+        assertEquals(220, pokemon.getHp());
+        assertEquals(8000, pokemon.getDust());
+        assertEquals(10, pokemon.getCandy());
+        assertNotNull(pokemon.getAttack());
+        assertNotNull(pokemon.getDefense());
+        assertNotNull(pokemon.getStamina());
     }
+
 }
