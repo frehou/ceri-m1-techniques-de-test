@@ -13,3 +13,4 @@
 
 [![codecov](https://codecov.io/gh/frehou/ceri-m1-techniques-de-test/graph/badge.svg?token=HR2ZBVCCV0)](https://codecov.io/gh/frehou/ceri-m1-techniques-de-test)
 
+![Checkstyle](https://img.shields.io/badge/Checkstyle-Passing-green)
