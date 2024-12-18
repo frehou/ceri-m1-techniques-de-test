@@ -33,12 +33,6 @@ jobs:
             - ~/.m2/repository
       - codecov/upload:
           file: target/site/jacoco/jacoco.xml
-
-  generate-docs:
-    docker:
-      - image: cimg/openjdk:17.0
-    steps:
-      - checkout
       - run:
           name: Generate Javadoc
           command: mvn javadoc:javadoc
