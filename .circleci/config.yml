@@ -34,6 +34,27 @@ jobs:
       - codecov/upload:
           file: target/site/jacoco/jacoco.xml
 
+  generate-docs:
+    docker:
+      - image: cimg/openjdk:17.0
+    steps:
+      - checkout
+      - run:
+          name: Generate Javadoc
+          command: mvn javadoc:javadoc
+      - run:
+          name: Deploy Javadoc to GitHub Pages
+          command: |
+            mkdir -p output
+            mv target/site/apidocs/* output/
+            git clone --branch gh-pages https://$GITHUB_TOKEN@github.com/frehou/ceri-m1-techniques-de-test.git gh-pages
+            cd gh-pages
+            rm -rf *
+            mv ../output/* .
+            git add .
+            git commit -m "Update Javadoc"
+            git push https://$GITHUB_TOKEN@github.com/frehou/ceri-m1-techniques-de-test.git gh-pages
+
   deploy:
     docker:
       - image: cimg/base:stable
