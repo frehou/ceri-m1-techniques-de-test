@@ -28,5 +28,4 @@ public class PokemonFactoryTest {
         assertNotNull(pokemon.getDefense());
         assertNotNull(pokemon.getStamina());
     }
-
 }
