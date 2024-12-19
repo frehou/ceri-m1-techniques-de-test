@@ -15,3 +15,5 @@
 
 [![Checkstyle](https://img.shields.io/badge/Checkstyle-Passing-green)](https://output.circle-artifacts.com/output/job/df62df98-4ad0-4a67-bab1-8464cd13fb5d/artifacts/0/checkstyle-report)
 
+[![Javadoc](https://img.shields.io/badge/docs-Javadoc-blue)](https://frehou.github.io/ceri-m1-techniques-de-test/)
+
